@@ -1,9 +1,13 @@
 <?php
 
+use App\Http\Controllers\Api\CustomerController as ApiCustomerController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeController;
 use App\Models\Expense;
+use App\Models\Phone;
+use App\Models\Post;
 use App\Models\Sale;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -55,6 +59,41 @@ Route::resource('employees', EmployeeController::class);
 Route::delete('employees/{employee}/forceDestroy', [EmployeeController::class, 'forceDestroy'])
     ->name('employees.forceDestroy');
 
+Route::get('/users', function () {
+    $data = User::with(['phone'])->paginate();
+    return view('user-list', compact('data'));
+});
+
+Route::get('/phone/{id}', function ($id) {
+    $phone = Phone::with(['user'])->find($id);
+    dd($phone->toArray());
+});
+
+Route::get('/posts/{id}', function ($id) {
+    $post = Post::with(['comments'])->find($id);
+    dd($post->toArray());
+});
+
+Route::get('/users/{id}/add-role', function ($id) {
+    $roles = [1,5,6,8];
+    $user = User::find($id);
+    $user->roles()->attach($roles);
+    dd($user->load('roles')->toArray());
+});
+
+Route::get('/users/{id}/remove-role', function ($id) {
+    $roles = [1,5,6,8];
+    $user = User::find($id);
+    $user->roles()->attach($roles);
+    dd($user->load('roles')->toArray());
+});
+
+Route::get('/users/{id}/sync-role', function ($id) {
+    $roles = [3,6,9,10];
+    $user = User::find($id);
+    $user->roles()->sync($roles);
+    dd($user->load('roles')->toArray());
+});
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -62,3 +101,5 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/movies', function () {
     return view('movies');
 })->middleware('checkage');
+
+Route::apiResource('customers', ApiCustomerController::class);
