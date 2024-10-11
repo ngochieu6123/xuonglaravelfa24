@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CustomerController;
+use App\Http\Controllers\Api\ProjectController;
+use App\Http\Controllers\Api\TaskController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -32,4 +34,7 @@ Route::middleware('auth:sanctum')
 
 
 Route::apiResource('customers', CustomerController::class);
+
+Route::apiResource('projects', ProjectController::class);
+Route::apiResource('projects.tasks', TaskController::class);
 
