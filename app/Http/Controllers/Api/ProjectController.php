@@ -75,7 +75,7 @@ class ProjectController extends Controller
         Project::destroy($id);
         return response()
             ->json([
-                'message' => 'Dự án được xóa'
+                'message' => 'Xoa thanh cong'
             ], 200);
     }
 }

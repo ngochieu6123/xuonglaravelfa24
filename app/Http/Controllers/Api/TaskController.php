@@ -35,7 +35,7 @@ class TaskController extends Controller
         $task = $project->tasks()->create($request->all());
         return response()
             ->json([
-                'message' => 'Nhiệm vụ được tạo',
+                'message' => 'Tao moi thanh cong',
                 'task' => $task
             ], 201);
     }
@@ -66,7 +66,7 @@ class TaskController extends Controller
         $task->update($request->all());
         return response()
             ->json([
-                'message' => 'Nhiệm vụ được cập nhật',
+                'message' => 'Cap nhat thanh cong',
                 'task' => $task
             ], 200);
     }
@@ -80,7 +80,7 @@ class TaskController extends Controller
         $task->delete();
         return response()
             ->json([
-                'message' => 'Nhiệm vụ được xóa'
+                'message' => 'Xoa thanh cong'
             ], 200);
     }
 }
