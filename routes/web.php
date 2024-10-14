@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\CustomerController as ApiCustomerController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\StudentController;
 use App\Models\Expense;
 use App\Models\Phone;
 use App\Models\Post;
@@ -59,6 +60,10 @@ Route::resource('employees', EmployeeController::class);
 Route::delete('employees/{employee}/forceDestroy', [EmployeeController::class, 'forceDestroy'])
     ->name('employees.forceDestroy');
 
+Route::resource('students', StudentController::class);
+Route::delete('students/{student}/forceDestroy', [StudentController::class, 'forceDestroy'])
+    ->name('students.forceDestroy');
+
 Route::get('/users', function () {
     $data = User::with(['phone'])->paginate();
     return view('user-list', compact('data'));
@@ -75,21 +80,21 @@ Route::get('/posts/{id}', function ($id) {
 });
 
 Route::get('/users/{id}/add-role', function ($id) {
-    $roles = [1,5,6,8];
+    $roles = [1, 5, 6, 8];
     $user = User::find($id);
     $user->roles()->attach($roles);
     dd($user->load('roles')->toArray());
 });
 
 Route::get('/users/{id}/remove-role', function ($id) {
-    $roles = [1,5,6,8];
+    $roles = [1, 5, 6, 8];
     $user = User::find($id);
     $user->roles()->attach($roles);
     dd($user->load('roles')->toArray());
 });
 
 Route::get('/users/{id}/sync-role', function ($id) {
-    $roles = [3,6,9,10];
+    $roles = [3, 6, 9, 10];
     $user = User::find($id);
     $user->roles()->sync($roles);
     dd($user->load('roles')->toArray());
@@ -102,4 +107,4 @@ Route::get('/movies', function () {
     return view('movies');
 })->middleware('checkage');
 
-Route::apiResource('customers', ApiCustomerController::class);
+// Route::apiResource('customers', ApiCustomerController::class);

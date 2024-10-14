@@ -18,11 +18,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        for($i= 0;$i<10;$i++){
-            Role::create([
-                'name' => fake()->text(20)
-            ]);
-        }
+        $this->call([
+            ClassroomSeeder::class,
+            StudentSeeder::class,
+            PassportSeeder::class,
+            SubjectSeeder::class,
+        ]);
+        // for($i= 0;$i<10;$i++){
+        //     Role::create([
+        //         'name' => fake()->text(20)
+        //     ]);
+        // }
 
         // for($i= 1;$i<11;$i++){
         //     Comment::create([
